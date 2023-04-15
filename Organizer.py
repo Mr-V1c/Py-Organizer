@@ -12,17 +12,17 @@ def main():
 
     with open(".OrganizerTMPfile") as f:
         strlist = f.read().split("\n")[:-1]
-        fList = []
+        fileList = []
         dirList = []
 
         for line in strlist:
             if line.endswith("/"):
                 dirList.append(line[:-1])
             else:
-                fList.append(line)
+                fileList.append(line)
 
-        for file in fList:
-            ext = GetFileExt(file)
+        for file in fileList:
+            ext = FromFileGetExt(file)
             dirName = FromExtGetDirName(ext)
             if HasDirNameInDirlist(dirName, dirList):
                 MoveFileToDir(file, dirName)
@@ -32,7 +32,7 @@ def main():
     os.system("rm .OrganizerTMPfile")
 
 
-def GetFileExt(file):
+def FromFileGetExt(file):
     objWithExt = re.search(r"\.(\w+)*$", file)
     try:
         assert objWithExt is not None
